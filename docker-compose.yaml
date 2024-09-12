@@ -1,0 +1,26 @@
+version: '4'
+services:
+  tenantmanager:
+    build: ./app
+    container_name: tenantmanager
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "5000:5000"
+    networks:
+      - some-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    networks:
+      - some-network
+
+networks:
+  some-network:
+    driver: bridge
